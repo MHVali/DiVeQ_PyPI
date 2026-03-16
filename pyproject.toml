@@ -1,0 +1,25 @@
+[project]
+name = "diveq"
+authors = [{name = "Mohammad Hassan Vali", email = "mohammad.vali@aalto.fi"}]
+version = "0.1"
+description = "A PyTorch class for end-to-end optimization of the codebook in a vector quantization task."
+readme = "README.md"
+license = "MIT"
+license-files = ["LICEN[CS]E*"]
+requires-python = ">=3.11"
+dependencies = [
+    "torch>=2.1.0",
+]
+
+[build-system]
+requires = ["uv_build>=0.9.10,<0.10.0"]
+build-backend = "uv_build"
+
+[project.urls]
+Home = "https://www.github.com/eagomez2/recp"
+
+[project.scripts]
+"recp" = "recp.cli.main:main"
+
+ignore-init-module-imports = true
+line-length = 79
