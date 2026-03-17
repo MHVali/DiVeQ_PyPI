@@ -7,63 +7,13 @@ Vector quantization is common in deep models, yet its hard assignments block gra
 
 ![alt text](https://raw.githubusercontent.com/AaltoML/DiVeQ/main/diveq_teaser.png)
 
-# VQVAE Image Compression
+# Quickstart
+Check the quickstart guide [here](https://eagomez2.github.io/recp/).
 
-## Contents of the VQVAE Directory
-
-- `train.py`: code to train the VQ-VAE model
-- `model.py`: code for VQ-VAE encoder and decoder
-- `diveq.py`: code to optimize the codebook by DiVeQ
-- `sf_diveq.py`: code to optimize the codebook by SF-DiVeQ
-- `diveq_detach.py`: code to optimize the codebook by Detach variant of DiVeQ
-- `sf_diveq_detach.py`: code to optimize the codebook by Detach variant of SF-DiVeQ
-- `residual_diveq.py`: code to optimize the codebook by Residual VQ using DiVeQ
-- `residual_sf_diveq.py`: code to optimize the codebook by Residual VQ using SF-DiVeQ
-- `product_diveq.py`: code to optimize the codebook by Product VQ using DiVeQ
-- `product_sf_diveq.py`: code to optimize the codebook by Product VQ using SF-DiVeQ
-- `vq.py`: code to optimize the codebook using other VQ baseline methods
-
-## Creating the Conda Environment for VQVAE Compression
-
-Create the environment by passing the following in your terminal in the following order.
-
+# Documentation
+The `recp` documentation is available online [here](https://eagomez2.github.io/recp/). You can also view it locally by running:
 ```bash
-conda create --name vqvae_comp python 3.13.3
-conda activate vqvae_comp
-pip install -r vqvae_comp_reqs.txt
-```
-
-# VQGAN Image Generation
-
-## Contents of the VQGAN Directory
-
-- `training_vqgan.py`: code to train the VQ-VAE model
-- `training_transformer.py`: code to train the transformer
-- `sample_transformer.py`: code to generate images from trained VQGAN
-- `compute_fid.py`: code to compute the FID score
-- `encoder.py`: contains the code for VQ-VAE encoder
-- `decoder.py`: contains the code for VQ-VAE decoder
-- `discriminator.py`: contains the code for the discriminator model used for training VQ-VAE
-- `vqgan.py`: contains the code to build the VQ-VAE model with the encoder, vector quantization, and decoder
-- `transformer.py`: contains the code to build the transformer model
-- `mingpt.py`: contains the code for GPT model
-- `helper.py`: contains some utility blocks used in building the models such as GroupNorm, ResidualBlock
-- `utils.py`: contains some utility functions like codebook replacement
-- `diveq.py`: code to optimize the codebook by DiVeQ
-- `sf_diveq.py`: code to optimize the codebook by SF-DiVeQ
-- `diveq_detach.py`: code to optimize the codebook by Detach variant of DiVeQ
-- `sf_diveq_detach.py`: code to optimize the codebook by Detach variant of SF-DiVeQ
-- `vq.py`: code to optimize the codebook using other VQ baseline methods
-
-## Creating the Conda Environment for VQGAN Generation
-
-Create the environment by passing the following in your terminal in the following order.
-
-```bash
-conda create --name vqgan_gen python 3.13.3
-conda activate vqgan_gen
-pip install -r vqgan_gen_reqs.txt
-```
+mkdocs serve
 
 ## Citation
 
