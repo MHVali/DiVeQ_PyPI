@@ -8,10 +8,10 @@ Vector quantization is common in deep models, yet its hard assignments block gra
 ![alt text](https://raw.githubusercontent.com/AaltoML/DiVeQ/main/diveq_teaser.png)
 
 # Quickstart
-Check the quickstart guide [here](https://eagomez2.github.io/recp/).
+Check the quickstart guide [here](https://MHVali.github.io/diveq/).
 
 # Documentation
-The `recp` documentation is available online [here](https://eagomez2.github.io/recp/). You can also view it locally by running:
+The `diveq` documentation is available online [here](https://MHVali.github.io/diveq/). You can also view it locally by running:
 ```bash
 mkdocs serve
 
