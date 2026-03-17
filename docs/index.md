@@ -10,6 +10,7 @@
 4. `from diveq import SFDIVEQDetach` optimizes the VQ codebook via SF-DiVeQ_Detach technique
 
 Other VQ variants that uses multiple codebooks for quantization
+
 5. `from diveq import ResidualDIVEQ` optimizes the VQ codebook via Residual_DiVeQ technique
 6. `from diveq import ResidualSFDIVEQ` optimizes the VQ codebook via Residual_SF-DiVeQ technique
 7. `from diveq import ProductDIVEQ` optimizes the VQ codebook via Product_DiVeQ technique
