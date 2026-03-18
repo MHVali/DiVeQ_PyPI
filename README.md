@@ -1,16 +1,9 @@
-# DiVeQ: Differentiable Vector Quantization Using the Reparameterization Trick
-
-This is the code implementation for the paper [*"DiVeQ: Differentiable Vector Quantization Using the Reparameterization Trick"*](https://arxiv.org/abs/2509.26469) accepted at ICLR 2026.
-
-**Abstract:**
-Vector quantization is common in deep models, yet its hard assignments block gradients and hinder end-to-end training. We propose DiVeQ, which treats quantization as adding an error vector that mimics the quantization distortion, keeping the forward pass hard while letting gradients flow. We also present a space-filling variant (SF-DiVeQ) that assigns to a curve constructed by the lines connecting codewords, resulting in less quantization error and full codebook usage. Both methods train end-to-end without requiring auxiliary losses or temperature schedules. In VQ-VAE image compression, VQGAN image generation, and DAC speech coding tasks across various data sets, our proposed methods improve reconstruction and sample quality over alternative quantization approaches.
-
-![alt text](https://raw.githubusercontent.com/AaltoML/DiVeQ/main/diveq_teaser.png)
-
 # Welcome to diveq
 `diveq` (short for differentiable vector quantization) is a tool designed to implement and train vector quantization (VQ) in deep neural networks (DNNs), like a VQ-VAE. It allows end-to-end training of DNNs which contain the non-differentiable VQ module, without any auxiliary loss and hyperparameter tunings. `diveq` is implemented via PyTorch and it requires `python >= 3.11` and `torch >= 1.13`.
 
-`diveq` method is published as a research paper entitled [*"DiVeQ: Differentiable Vector Quantization Using the Reparameterization Trick"*](https://arxiv.org/abs/2509.26469) at International Conference on Learning Representations (ICLR) 2026.
+![alt text](https://raw.githubusercontent.com/AaltoML/DiVeQ/main/diveq_teaser.png "DiVeQ Algorithm")
+
+`diveq` method is published as a research paper entitled [*"DiVeQ: Differentiable Vector Quantization Using the Reparameterization Trick"*](https://arxiv.org/abs/2509.26469) in International Conference on Learning Representations (ICLR) 2026. You can find the original Github repository of the paper at [https://github.com/AaltoML/DiVeQ](https://github.com/AaltoML/DiVeQ).
 
 `diveq` package includes eight different quantization methods:
 1. `from diveq import DIVEQ` optimizes the VQ codebook via DiVeQ technique
@@ -136,6 +129,7 @@ Here, we provide the list of parameters that are used as inputs to eight differe
 For further details about different vector quantization methods in the `diveq` package and their corresponding parameters, please see the details provided in the main python codes.
 
 # Citation
+If this package contributed to your work, please consider citing it:
 
 ```
 @InProceedings{vali2026diveq,
@@ -147,4 +141,4 @@ For further details about different vector quantization methods in the `diveq` p
 ```
 
 # License
-This software is provided under the MIT License. See the accompanying [LICENSE](LICENSE.txt) file for details.
+`diveq` was developed by <span property="cc:attributionName">Mohammad Hassan Vali</span>, part of the <a href="https://users.aalto.fi/~asolin/group/" target="_blank">AaltoML research group from Aalto University</a> and is licensed under MIT license. See the accompanying [LICENSE](LICENSE.txt) file for details.
