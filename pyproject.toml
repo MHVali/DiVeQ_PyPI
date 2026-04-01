@@ -1,13 +1,13 @@
 [project]
 name = "diveq"
 authors = [{name = "Mohammad Hassan Vali", email = "mohammad.vali@aalto.fi"}]
-version = "0.2"
+version = "0.3"
 description = "A PyTorch class for end-to-end optimization of the codebook in a vector quantization task."
 readme = "README.md"
 license = { file = "LICENSE.txt" }
 requires-python = ">=3.11"
 dependencies = [
-    "torch>=2.1.0",
+    "torch>=2.0.0",
 ]
 
 keywords = [
