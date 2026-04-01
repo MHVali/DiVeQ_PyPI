@@ -1,11 +1,11 @@
 # Welcome to diveq
-`diveq` (short for differentiable vector quantization) is a tool designed to implement and train vector quantization (VQ) in deep neural networks (DNNs), like a VQ-VAE. It allows end-to-end training of DNNs which contain the non-differentiable VQ module, without any auxiliary loss and hyperparameter tunings. `diveq` is implemented via PyTorch and it requires `python >= 3.11` and `torch >= 1.13`.
+`diveq` (short for differentiable vector quantization) is a tool designed to implement and train vector quantization (VQ) in deep neural networks (DNNs), like a VQ-VAE. It allows end-to-end training of DNNs which contain the non-differentiable VQ module, without any auxiliary losses and hyperparameter tunings. `diveq` is implemented via PyTorch and it requires `python >= 3.11` and `torch >= 2.0.0`.
 
-![alt text](https://raw.githubusercontent.com/AaltoML/DiVeQ/main/diveq_teaser.png "DiVeQ Algorithm")
+![alt text](https://raw.githubusercontent.com/AaltoML/DiVeQ/main/diveq_teaser.png)
 
 `diveq` method is published as a research paper entitled [*"DiVeQ: Differentiable Vector Quantization Using the Reparameterization Trick"*](https://arxiv.org/abs/2509.26469) in International Conference on Learning Representations (ICLR) 2026. You can find the original Github repository of the paper at [https://github.com/AaltoML/DiVeQ](https://github.com/AaltoML/DiVeQ).
 
-`diveq` package includes eight different quantization methods:
+`diveq` package includes eight different vector quantization (VQ) methods:
 1. `from diveq import DIVEQ` optimizes the VQ codebook via DiVeQ technique
 2. `from diveq import SFDIVEQ` optimizes the VQ codebook via SF-DiVeQ technique
 3. `from diveq import DIVEQDetach` optimizes the VQ codebook via DiVeQ_Detach technique
