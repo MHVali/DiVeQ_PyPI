@@ -1,8 +1,8 @@
 [project]
 name = "diveq"
 authors = [{name = "Mohammad Hassan Vali", email = "mohammad.vali@aalto.fi"}]
-version = "0.3"
-description = "A PyTorch class for end-to-end optimization of the codebook in a vector quantization task."
+version = "0.1.0"
+description = "A PyTorch class for end-to-end training of vector quantization codebook in a deep neural network."
 readme = "README.md"
 license = { file = "LICENSE.txt" }
 requires-python = ">=3.11"
@@ -21,9 +21,9 @@ keywords = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/MHVali/DiVeQ_PyPI"
-Repository = "https://github.com/MHVali/DiVeQ_PyPI"
-Issues = "https://github.com/MHVali/DiVeQ_PyPI/issues"
+Repository = "https://github.com/AaltoML/DiVeQ_package"
+Issues = "https://github.com/AaltoML/DiVeQ_package/issues"
+Paper = "https://arxiv.org/pdf/2509.26469"
 
 [build-system]
 requires = ["uv_build>=0.9.10,<0.10.0"]

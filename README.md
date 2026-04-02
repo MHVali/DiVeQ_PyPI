@@ -1,105 +1,72 @@
 # Welcome to diveq
-`diveq` (short for differentiable vector quantization) is a tool designed to implement and train vector quantization (VQ) in deep neural networks (DNNs), like a VQ-VAE. It allows end-to-end training of DNNs which contain the non-differentiable VQ module, without any auxiliary losses and hyperparameter tunings. `diveq` is implemented via PyTorch and it requires `python >= 3.11` and `torch >= 2.0.0`.
+`diveq` (short for differentiable vector quantization) is a tool designed to implement and train vector quantization (VQ) in deep neural networks (DNNs), like a VQ-VAE. It allows end-to-end training of DNNs which contain the non-differentiable VQ module, without any auxiliary losses and hyperparameter tunings. `diveq` is implemented via PyTorch and it requires `python >= 3.11` and `torch >= 2.0.0` .
 
-![alt text](https://raw.githubusercontent.com/AaltoML/DiVeQ/main/diveq_teaser.png)
+![alt text](example/diveq_teaser.png)
 
-`diveq` method is published as a research paper entitled [*"DiVeQ: Differentiable Vector Quantization Using the Reparameterization Trick"*](https://arxiv.org/abs/2509.26469) in International Conference on Learning Representations (ICLR) 2026. You can find the original Github repository of the paper at [https://github.com/AaltoML/DiVeQ](https://github.com/AaltoML/DiVeQ).
+`diveq` method is published as a research paper entitled [*"DiVeQ: Differentiable Vector Quantization Using the Reparameterization Trick"*](https://arxiv.org/abs/2509.26469) in International Conference on Learning Representations (ICLR) in 2026. You can find the original Github repository of the paper at [https://github.com/AaltoML/DiVeQ](https://github.com/AaltoML/DiVeQ).
 
 `diveq` package includes eight different vector quantization (VQ) methods:
-1. `from diveq import DIVEQ` optimizes the VQ codebook via DiVeQ technique
-2. `from diveq import SFDIVEQ` optimizes the VQ codebook via SF-DiVeQ technique
-3. `from diveq import DIVEQDetach` optimizes the VQ codebook via DiVeQ_Detach technique
-4. `from diveq import SFDIVEQDetach` optimizes the VQ codebook via SF-DiVeQ_Detach technique
+1. `from diveq import DIVEQ` optimizes the VQ codebook via DiVeQ technique. DiVeQ is the first proposed method in the paper that works as an ordinary VQ by mapping the input to codebook vectors.
+2. `from diveq import SFDIVEQ` optimizes the VQ codebook via Space-Filling DiVeQ technique. SFDiVeQ is the second proposed method in the paper that is different with ordinary VQ in the way that it mapps the input to a space-filling curve that is constructed by codebook vectors.
 
-Other VQ variants that uses multiple codebooks for quantization
+VQ variants that use multiple codebooks for vector quantization, i.e., Residual VQ and Product VQ:
 
-5. `from diveq import ResidualDIVEQ` optimizes the VQ codebook via Residual_DiVeQ technique
-6. `from diveq import ResidualSFDIVEQ` optimizes the VQ codebook via Residual_SF-DiVeQ technique
-7. `from diveq import ProductDIVEQ` optimizes the VQ codebook via Product_DiVeQ technique
-8. `from diveq import ProductSFDIVEQ` optimizes the VQ codebook via Product_SF-DiVeQ technique
+3. `from diveq import ResidualDIVEQ` optimizes the Residual VQ codebooks via DiVeQ technique
+4. `from diveq import ResidualSFDIVEQ` optimizes the Residual VQ codebooks via SF-DiVeQ technique
+5. `from diveq import ProductDIVEQ` optimizes the Product VQ codebooks via DiVeQ technique
+6. `from diveq import ProductSFDIVEQ` optimizes the Product VQ codebooks via SF-DiVeQ technique
+
+Variants of DiVeQ and SF-DiVeQ techniques that use deterministic quantization instead of stochastic quantization:
+
+7. `from diveq import DIVEQDetach` optimizes the VQ codebook via DiVeQ_Detach technique
+8. `from diveq import SFDIVEQDetach` optimizes the VQ codebook via SF-DiVeQ_Detach technique
+
+For more details on these eight different VQ methods, see the paper.
 
 # Installation
 
-## Install using pip
-The easiest way to install `diveq` is through `pip` by running:
+You can install `diveq` through `pip` by running:
 
 ```bash
 pip install diveq
 ```
 
-After installing `diveq` you can verify the installation by running:
+After installing `diveq` you can verify the installation and package details by running:
 
 ```bash
-diveq --version
+python -m pip show diveq
 ```
-
-This should output:
-
-```bash
-diveq version x.y.z yyyy-zzzz developed by Mohammad Vali (AaltoML Research Group, Aalto University)
-```
-
-Where:
-
-- `x.y.z` represents the major, minor, and patch version.
-- `yyyy-zzzz` indicates the development start year and the current year.
-
-## Install using uv 
-
-`uv` is a modern python package manager. You can see more details about `uv` in [the official documentation](https://docs.astral.sh/uv/).
-
-First, you need to install `uv` and `uvx` following the instructions for your operating system in <a href="https://docs.astral.sh/uv/getting-started/installation/" target="_blank">`uv` website</a>.
-
-Then run:
-
-```bash
-uv tool install diveq
-```
-
-You can verify the installation running:
-
-```bash
-uv tool run diveq --version
-```
-
-or you can use the shortcut version `uvx`:
-
-```bash
-uvx diveq --version
-```
-
-This should output:
-
-```bash
-diveq version x.y.z yyyy-zzzz developed by Mohammad Vali (AaltoML Research Group, Aalto University)
-```
-
-Where:
-
-- `x.y.z` represents the major, minor, and patch version.
-- `yyyy-zzzz` indicates the development start year and the current year.
 
 # Usage Example
 
-Before using `diveq`, you have to install it by one of the methods mentioned earlier.
+Before using `diveq`, you have to install it uisng `pip install diveq`.
 
-## Use DiVeQ for vector quantization in a VQ-VAE
-In **example** directory, we provide a code example of how `diveq` is used in a vector quantized variational autoencoder (VQ-VAE). A minimal example is shown below:
+Below you see a minimal example on how to import and use `DIVEQ` optimization method as a vector quantizer in a model.
 
-```
+```bash
 from diveq import DIVEQ
-.
-.
-.
-self.vq = DIVEQ(num_embeddings, embedding_dim)
+vector_quantizer = DIVEQ(num_embeddings, embedding_dim)
 ```
 
-In this example:
+- `vector_quantizer` is the vector quantization module that will be used for buidling the model.
+- `num_embeddings` and `embedding_dim` are the codebook size and dimension of each codebook entry, respectively. In the following, you can find the list of all parameters used in different vector quantization modules incorporated in `diveq` package.
 
-- `self.vq` is the vector quantization module that will be used for buidling the model.
-- `num_embeddings` and `embedding_dim` are the codebook size and dimension of each codebook entry, respectively. In the following, you can find the list of all parameters used in different quantization methods incorporated in `diveq` package.
+In `example` directory, we provide a code example of how vector quantization modules in `diveq` can be used in a vector quantized variational autoencoder (VQ-VAE). You can create the required environemnt to run the code by running:
 
-## List of parameters
+```bash
+cd example  #change directory to example folder
+conda create --name diveq_example python=3.11
+conda activate diveq_example
+pip install -r requirements.txt
+```
+
+Then, you can train the VQ-VAE model by running:
+
+```bash
+python train.py
+```
+
+# List of parameters
 Here, we provide the list of parameters that are used as inputs to eight different vector quantization methods included in `diveq` package.
 
 - `num_embeddings` (integer): Codebook size or the number of codewords in the codeook.
@@ -116,7 +83,7 @@ Here, we provide the list of parameters that are used as inputs to eight differe
 - `allow_warning` (bool): Whether to print the warnings. The warnings will warn if the user inserts unusual values for the parameters.
 - `num_codebooks` (integer): Number of codebooks to be used for quantization in VQ variants of Residual VQ and Product VQ. All the codebooks will have the same size and dimensionality.
 
-# Important Notes
+# Important Notes about Parameters
 
 1. **Codebook Replacement:** Note that to prevent *codebook collapse*, we include a codebook replacement function (in cases where it is required) inside different quantization modules. Codebook replacement function is called after each `replacement_iters` training iterations, and it replaces the codewords which are used less than `discard_threshold` with a pertubation of an actively used codeword which is shifted by `perturb_eps` magnitude. If `verbose=True`, the status of how many unsued codewords is replaced will be printed by the module. Note that the number of unused codewords should be decreased over training and it might take a while.
 
