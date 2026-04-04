@@ -93,7 +93,7 @@ Here, we provide the list of parameters that are used as inputs to eight differe
 
 4. **Detach Methods:** *DiVeQ_Detach* and *SF-DiVeQ_Detach* methods do not use directional noise. Therefore, they do not need to set the `noise_var` parameter.
 
-For further details about different vector quantization methods in the `diveq` package and their corresponding parameters, please see the details provided in the main Python codes.
+For further details about different vector quantization methods in the `diveq` package and their corresponding parameters, please see the details provided in the Python codes in `src` directory of the `diveq` package.
 
 # Citation
 If this package contributed to your work, please consider citing it:

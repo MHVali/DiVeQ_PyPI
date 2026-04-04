@@ -35,17 +35,6 @@ parser.add_argument("--num_codebooks", type=int, default=4,
 parser.add_argument('--device', type=str, default="cuda")
 parser.add_argument("--data_path", type=str, help="path to training set")
 
-args = parser.parse_args()
-
-# path to dataset directory
-os.makedirs("data_dir", exist_ok=True)
-data_path = kagglehub.dataset_download("badasstechie/celebahq-resized-256x256",
-                                                                output_dir="./data_dir")
-args.data_path = os.path.join(data_path, "celeba_hq_256")
-
-# device
-args.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-
 # ---------------- Creating the VQ-VAE model ----------------
 class Model(nn.Module):
     def __init__(self, num_hiddens, num_residual_layers, num_residual_hiddens,
@@ -119,62 +108,78 @@ class Model(nn.Module):
             x_recon = self._decoder(quantized)
             return x_recon
 
-# ---------------- Some configurations for the model and optimizer ----------------
-num_hiddens = 256
-num_residual_hiddens = 128
-num_residual_layers = 6
+def main():
 
-os.makedirs("checkpoints", exist_ok=True)
-os.makedirs(f"results/{args.codebook_optimization}", exist_ok=True)
-num_eval_samples = 5
+    args = parser.parse_args()
 
-num_embeddings = int(2**args.codebook_bits)
-milestones = [int(args.epochs*0.4), int(args.epochs*0.7)]
+    # path to dataset directory
+    os.makedirs("data_dir", exist_ok=True)
+    data_path = kagglehub.dataset_download("badasstechie/celebahq-resized-256x256",
+                                                                    output_dir="./data_dir")
+    args.data_path = os.path.join(data_path, "celeba_hq_256")
 
-dataset = Dataset_Custom(args)
-training_loader = DataLoader(dataset, batch_size=args.batch_size, shuffle=True,
-                             num_workers=1, drop_last=True)
+    # device
+    args.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-# Instantiate the vq-vae model
-model = Model(num_hiddens, num_residual_layers, num_residual_hiddens, num_embeddings,
-              args.embedding_dim, args.num_codebooks, args.codebook_optimization).to(args.device)
+    # ---------------- Some configurations for the model and optimizer ----------------
+    num_hiddens = 256
+    num_residual_hiddens = 128
+    num_residual_layers = 6
 
-optimizer = optim.Adam(model.parameters(), lr=args.lr, amsgrad=False)
-scheduler = optim.lr_scheduler.MultiStepLR(optimizer, milestones=milestones, gamma=0.5)
+    os.makedirs("checkpoints", exist_ok=True)
+    os.makedirs(f"results/{args.codebook_optimization}", exist_ok=True)
+    num_eval_samples = 5
 
-model.train()
-# ---------------- Training Loop ----------------
-for epoch in range(args.epochs):
+    num_embeddings = int(2**args.codebook_bits)
+    milestones = [int(args.epochs*0.4), int(args.epochs*0.7)]
 
-    with tqdm(range(len(training_loader))) as pbar:
-        for i, data in zip(pbar, training_loader):
-            data = data.to(args.device)
-            optimizer.zero_grad()
+    dataset = Dataset_Custom(args)
+    training_loader = DataLoader(dataset, batch_size=args.batch_size, shuffle=True,
+                                num_workers=2, drop_last=True)
 
-            data_recon, indices, perplexity = model(data)
+    # Instantiate the vq-vae model
+    model = Model(num_hiddens, num_residual_layers, num_residual_hiddens, num_embeddings,
+                args.embedding_dim, args.num_codebooks, args.codebook_optimization).to(args.device)
 
-            recon_loss = F.mse_loss(data_recon, data)
-            recon_loss.backward()
+    optimizer = optim.Adam(model.parameters(), lr=args.lr, amsgrad=False)
+    scheduler = optim.lr_scheduler.MultiStepLR(optimizer, milestones=milestones, gamma=0.5)
 
-            pbar.set_postfix(Epoch=epoch + 1, Recon_Loss=f"{recon_loss.item():.6f}",
-                             Perplexity=f"{perplexity}")
+    model.train()
+    # ---------------- Training Loop ----------------
+    for epoch in range(args.epochs):
 
-            optimizer.step()
-            pbar.update(0)
+        with tqdm(range(len(training_loader))) as pbar:
+            for i, data in zip(pbar, training_loader):
+                data = data.to(args.device)
+                optimizer.zero_grad()
 
-    scheduler.step() # for learning rate scheduling
+                data_recon, indices, perplexity = model(data)
 
-    # Visualization of reconstructed images (assumption: values of images are in the range of [-1,1])
-    with torch.no_grad():
-        images = data[0:num_eval_samples]
-        recon_images = model.inference(images)
-        concat_images = torch.cat((torch.clamp(images.add(1).mul(0.5), min=0.0, max=1.0)
-                       , torch.clamp(recon_images.add(1).mul(0.5), min=0.0, max=1.0)))
-        vutils.save_image(concat_images, os.path.join(f"results/{args.codebook_optimization}",
-                                              f"epoch{epoch + 1}.jpg"), nrow=num_eval_samples)
+                recon_loss = F.mse_loss(data_recon, data)
+                recon_loss.backward()
 
-    # Save the model
-    if (epoch + 1) % 10 == 0:
-        torch.save(model.state_dict(),f"checkpoints/"
-              f"vqvae_{args.codebook_optimization}_epoch{str(epoch + 1)}_"
-                          f"{args.codebook_bits}bit_bs{args.batch_size}_lr{args.lr}.pt")
+                pbar.set_postfix(Epoch=epoch + 1, Recon_Loss=f"{recon_loss.item():.6f}",
+                                Perplexity=f"{perplexity}")
+
+                optimizer.step()
+                pbar.update(0)
+
+        scheduler.step() # for learning rate scheduling
+
+        # Visualization of reconstructed images (assumption: values of images are in the range of [-1,1])
+        with torch.no_grad():
+            images = data[0:num_eval_samples]
+            recon_images = model.inference(images)
+            concat_images = torch.cat((torch.clamp(images.add(1).mul(0.5), min=0.0, max=1.0)
+                        , torch.clamp(recon_images.add(1).mul(0.5), min=0.0, max=1.0)))
+            vutils.save_image(concat_images, os.path.join(f"results/{args.codebook_optimization}",
+                                                f"epoch{epoch + 1}.jpg"), nrow=num_eval_samples)
+
+        # Save the model
+        if (epoch + 1) % 10 == 0:
+            torch.save(model.state_dict(),f"checkpoints/"
+                f"vqvae_{args.codebook_optimization}_epoch{str(epoch + 1)}_"
+                            f"{args.codebook_bits}bit_bs{args.batch_size}_lr{args.lr}.pt")
+
+if __name__ == "__main__":
+    main()
