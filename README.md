@@ -51,7 +51,7 @@ vector_quantizer = DIVEQ(num_embeddings, embedding_dim)
 - `vector_quantizer` is the vector quantization module that will be used for building the model.
 - `num_embeddings` and `embedding_dim` are the codebook size and dimension of each codebook entry, respectively. In the following, you can find the list of all parameters used in different vector quantization modules incorporated in `diveq` package.
 
-In the `example` directory of the [GitHub for diveq package](https://github.com/AaltoML/DiVeQ_package), we provide a code example of how vector quantization modules in `diveq` can be used in a vector quantized variational autoencoder (VQ-VAE). You can create the required environment to run the code by running:
+In the `example` directory of the [GitHub for `diveq` package](https://github.com/AaltoML/DiVeQ_package), we provide a code example of how vector quantization modules in `diveq` can be used in a vector quantized variational autoencoder (VQ-VAE). You can create the required environment to run the code by running:
 
 ```bash
 cd example  #change directory to example folder
