@@ -1,7 +1,7 @@
 # Welcome to diveq
 `diveq` (short for differentiable vector quantization) is a tool for implementing and training vector quantization (VQ) in deep neural networks (DNNs), such as a VQ-VAE. It allows end-to-end training of DNNs that contain the non-differentiable VQ module, without any auxiliary losses and hyperparameter tunings. `diveq` is implemented via PyTorch, and it requires `python >= 3.11` and `torch >= 2.0.0` .
 
-![alt text](example/diveq_teaser.png)
+![alt text](https://raw.githubusercontent.com/MHVali/DiVeQ_PyPI/main/example/diveq_teaser.png)
 
 `diveq` method is published as a research paper entitled [*"DiVeQ: Differentiable Vector Quantization Using the Reparameterization Trick"*](https://arxiv.org/pdf/2509.26469) in the International Conference on Learning Representations (ICLR) in 2026. You can find the original GitHub repository of the paper at [https://github.com/AaltoML/DiVeQ](https://github.com/AaltoML/DiVeQ).
 
@@ -51,7 +51,7 @@ vector_quantizer = DIVEQ(num_embeddings, embedding_dim)
 - `vector_quantizer` is the vector quantization module that will be used for building the model.
 - `num_embeddings` and `embedding_dim` are the codebook size and dimension of each codebook entry, respectively. In the following, you can find the list of all parameters used in different vector quantization modules incorporated in `diveq` package.
 
-In the `example` directory, we provide a code example of how vector quantization modules in `diveq` can be used in a vector quantized variational autoencoder (VQ-VAE). You can create the required environment to run the code by running:
+In the `example` directory of the (GitHub for `diveq` package)[https://github.com/AaltoML/DiVeQ_package], we provide a code example of how vector quantization modules in `diveq` can be used in a vector quantized variational autoencoder (VQ-VAE). You can create the required environment to run the code by running:
 
 ```bash
 cd example  #change directory to example folder
@@ -108,4 +108,4 @@ If this package contributed to your work, please consider citing it:
 ```
 
 # License
-`diveq` was developed by <span property="cc:attributionName">Mohammad Hassan Vali</span>, part of the <a href="https://users.aalto.fi/~asolin/group/" target="_blank">AaltoML research group from Aalto University</a> and is licensed under MIT license. See the accompanying [LICENSE](LICENSE.txt) file for details.
+`diveq` was developed by <span property="cc:attributionName">Mohammad Hassan Vali</span>, part of the <a href="https://users.aalto.fi/~asolin/group/" target="_blank">AaltoML research group from Aalto University</a> and is licensed under MIT license.

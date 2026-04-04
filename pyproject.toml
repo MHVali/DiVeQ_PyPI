@@ -15,7 +15,7 @@ keywords = [
     "pytorch",
     "vector-quantization",
     "machine-learning",
-    "VQ-VAE",
+    "vq-vae",
     "tokenization",
     "representation-learning"
 ]
